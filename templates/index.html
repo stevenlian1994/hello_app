@@ -14,27 +14,27 @@
         // var socket = io.connect('http://' + document.domain + ':' + location.port);
     $(document).ready(function(){
         var socket = io.connect('http://127.0.0.1:5000');
-
-        // socket.on('connect', function() {
-        //     // socket.emit('user has connected')
-        //     console.log('hellloo world')
-        //     // socket.emit('message', {data: 'User has connected!'});
-        //     socket.emit('message', 'User has connected!');
-        // });
-
-        // socket.on('connect', function() {
-        //     console.log('hellloo world')
-        //     socket.emit('banana', 'Banana has connected!');
-        // });
-
         socket.on('connect', function() {
-            console.log('hellloo world')
-            socket.emit('banana', {data:'Banana has connected!'});
+        //^ don't touch the 'connect'
+            socket.emit('new_connection', {data:'User has connected!'});
         });
         socket.on('apple', function(){
             console.log('hi this is apple')
+            // console.log(message['data'])
+            $('body').append('bybye world')
         } )
-
+        $('#send_form').submit(function(){
+            $.ajax({
+                url:'pineapple',
+                method: 'POST',
+                data: $(this).serialize()
+                
+            })
+            .done(function(res){
+                console.log(res)
+            })
+            return false
+        })
     })
 
         // socket.on('connect', function() {
@@ -42,8 +42,10 @@
         // });
     </script>
     <ul id="messages"></ul>
-    <input type="text" id="myMessage">
-    <button id="sendbutton">Send</button>
+    <form action="POST" id="send_form">
+        <input type="text" id="myMessage" name='text_message'>
+        <button id="sendbutton">Send</button>
+    </form>
 </body>
 
 </html>

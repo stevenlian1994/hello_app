@@ -16,15 +16,19 @@ def index():
 #     print('received message: ' + message)
 #     socketio.emit('apple', message, broadcast=True)
 
-@socketio.on('banana')
-#banana is the event handler 
+@socketio.on('new_connection')
+#connect is the event handler 
 def handle_message(message):
-    # print(type(message))
     print(message['data'])
-    # print('received message: ' + message['data'])
     socketio.emit('apple', message['data'], broadcast=True)
     # emits to all open sockets
-    
+
+@app.route('/pineapple', methods=['POST'])
+def handle_pineapple():
+    x = request.form['text_message']
+    print(request.form['text_message'])
+    return 'hi worllld'
+    #adding comment
 # @socketio.on('json')
 # def handle_json(json):
 #     send(json, json=True)
